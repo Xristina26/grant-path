@@ -801,18 +801,24 @@ const DraftingView = ({
 
   return (
     <div className="max-w-7xl mx-auto p-6 md:p-10 space-y-10">
-      <div className="flex items-center gap-6">
-        <button onClick={onBack} className="p-4 bg-white border-2 border-slate-200 rounded-2xl hover:bg-slate-50 transition-all shadow-sm">
-          <LogOut className="w-5 h-5 -rotate-180 text-slate-700" />
-        </button>
-        <div className="space-y-1">
-           <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">Active Drafting Agent</p>
-           <h2 className="text-3xl md:text-4xl font-black text-slate-900">Application Strategy</h2>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-6">
+          <button onClick={onBack} className="p-4 bg-white border-2 border-slate-200 rounded-2xl hover:bg-slate-50 transition-all shadow-sm">
+            <LogOut className="w-5 h-5 -rotate-180 text-slate-700" />
+          </button>
+          <div className="space-y-1">
+             <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">Active Drafting Agent</p>
+             <h2 className="text-3xl md:text-4xl font-black text-slate-900">Application Strategy</h2>
+          </div>
+        </div>
+        <div className="hidden md:block text-right">
+           <p className="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Applying for</p>
+           <p className="text-sm font-bold text-teal-700">{grant.title}</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-        {/* Main Sections Bento Grid */}
+        {/* Main Sections - NOW EDITABLE */}
         <div className="col-span-1 md:col-span-8 grid grid-cols-1 gap-6">
           <Card className="space-y-12 p-8 md:p-12">
             <section className="space-y-6">
@@ -823,13 +829,15 @@ const DraftingView = ({
                   </div>
                   <h4 className="font-black uppercase tracking-widest text-sm">Programme Objectives</h4>
                 </div>
-                <span className="text-xs font-bold text-emerald-700 flex items-center gap-2">
-                   <div className="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-pulse" /> READY
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] flex items-center gap-2 bg-slate-50 px-3 py-1 rounded-full border border-slate-100">
+                   EDITABLE FIELD
                 </span>
               </div>
-              <div className="p-8 bg-slate-50 rounded-2xl text-slate-700 font-medium leading-relaxed border-2 border-slate-100 italic font-serif text-xl">
-                "{draft?.objectives}"
-              </div>
+              <textarea 
+                className="w-full p-8 bg-slate-50 rounded-2xl text-slate-700 font-medium leading-relaxed border-2 border-slate-100 italic font-serif text-xl focus:border-teal-500 focus:bg-white outline-none transition-all h-64 resize-none"
+                value={draft?.objectives}
+                onChange={(e) => setDraft(prev => prev ? {...prev, objectives: e.target.value} : null)}
+              />
             </section>
 
             <section className="space-y-6">
@@ -840,13 +848,15 @@ const DraftingView = ({
                   </div>
                   <h4 className="font-black uppercase tracking-widest text-sm">Measurable Outcomes</h4>
                 </div>
-                <span className="text-xs font-bold text-emerald-700 flex items-center gap-2">
-                   <div className="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-pulse" /> READY
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] flex items-center gap-2 bg-slate-50 px-3 py-1 rounded-full border border-slate-100">
+                   EDITABLE FIELD
                 </span>
               </div>
-              <div className="p-8 bg-slate-50 rounded-2xl text-slate-700 font-medium leading-relaxed border-2 border-slate-100 italic font-serif text-xl">
-                "{draft?.outcomes}"
-              </div>
+              <textarea 
+                className="w-full p-8 bg-slate-50 rounded-2xl text-slate-700 font-medium leading-relaxed border-2 border-slate-100 italic font-serif text-xl focus:border-teal-500 focus:bg-white outline-none transition-all h-64 resize-none"
+                value={draft?.outcomes}
+                onChange={(e) => setDraft(prev => prev ? {...prev, outcomes: e.target.value} : null)}
+              />
             </section>
 
             <section className="space-y-6">
@@ -857,29 +867,41 @@ const DraftingView = ({
                   </div>
                   <h4 className="font-black uppercase tracking-widest text-sm">Budget Narrative</h4>
                 </div>
-                <span className="text-xs font-bold text-emerald-700 flex items-center gap-2">
-                   <div className="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-pulse" /> READY
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] flex items-center gap-2 bg-slate-50 px-3 py-1 rounded-full border border-slate-100">
+                   EDITABLE FIELD
                 </span>
               </div>
-              <div className="p-8 bg-slate-50 rounded-2xl text-slate-700 font-medium leading-relaxed border-2 border-slate-100 italic font-serif text-xl">
-                "{draft?.budgetNarrative}"
-              </div>
+              <textarea 
+                className="w-full p-8 bg-slate-50 rounded-2xl text-slate-700 font-medium leading-relaxed border-2 border-slate-100 italic font-serif text-xl focus:border-teal-500 focus:bg-white outline-none transition-all h-64 resize-none"
+                value={draft?.budgetNarrative}
+                onChange={(e) => setDraft(prev => prev ? {...prev, budgetNarrative: e.target.value} : null)}
+              />
             </section>
+
+            <div className="pt-8 border-t border-slate-100">
+               <div className="flex items-center gap-4 p-6 bg-rose-50 rounded-2xl border-2 border-rose-100 text-rose-800">
+                  <Info className="w-6 h-6 flex-shrink-0" />
+                  <p className="text-xs font-bold leading-relaxed">
+                     <span className="font-black uppercase">Disclaimer:</span> AI drafting is grounded in your profile and grant data, but hallucinations can occur. Always verify facts, dates, and budget figures against the official {grant.provider} guidance before submission.
+                  </p>
+               </div>
+            </div>
           </Card>
         </div>
 
-        {/* Sidebar Insights Bento Grid */}
+        {/* Sidebar Insights */}
         <div className="col-span-1 md:col-span-4 flex flex-col gap-6">
            <Card className="bg-slate-900 border-none text-white p-10">
               <div className="flex items-center gap-4 mb-8">
                  <div className="w-12 h-12 bg-teal-500 rounded-full flex items-center justify-center">
                     <Sparkles className="w-6 h-6 text-slate-900" />
                  </div>
-                 <h4 className="font-bold text-sm uppercase tracking-widest">AI Suggestion</h4>
+                 <h4 className="font-bold text-sm uppercase tracking-widest">Drafting Logic</h4>
               </div>
-              <p className="text-lg font-serif italic text-slate-300 leading-relaxed">
-                 "I've linked your project objectives directly to the {grant.provider} requirements for local economic growth. This makes your bid significantly more compliant with their Tier 1 assessment criteria."
-              </p>
+              <div className="space-y-6 text-slate-300 text-base leading-relaxed">
+                 <p>The "Active Drafting Agent" synthesis profile context (Mission: <span className="text-white font-bold">{org.name}</span>) against specific grant criteria (<span className="text-white font-bold">{grant.title}</span>).</p>
+                 <p>It prioritises <span className="text-teal-400 font-bold">UK compliance terminology</span> and structures responses to match standard Third Sector funding requirements.</p>
+              </div>
            </Card>
 
            <Card className="p-10">
@@ -900,17 +922,28 @@ const DraftingView = ({
               </div>
            </Card>
 
-           <Button className="!py-5 !rounded-2xl shadow-xl shadow-teal-100">Export Application</Button>
+           <Button className="!py-5 !rounded-2xl shadow-xl shadow-teal-100" icon={FileText}>Export to Word/PDF</Button>
         </div>
       </div>
     </div>
   );
 };
 
-const Directory = ({ grants, onAddGrant }: { grants: Grant[], onAddGrant: (grant: Grant) => void }) => {
+const Directory = ({ 
+  grants, 
+  onAddGrant, 
+  onDeleteGrant, 
+  onUpdateGrant 
+}: { 
+  grants: Grant[], 
+  onAddGrant: (grant: Grant) => void,
+  onDeleteGrant: (id: string) => void,
+  onUpdateGrant: (grant: Grant) => void
+}) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [isAdding, setIsAdding] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [newGrant, setNewGrant] = useState<Partial<Grant>>({
     title: '',
     description: '',
@@ -935,10 +968,15 @@ const Directory = ({ grants, onAddGrant }: { grants: Grant[], onAddGrant: (grant
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (newGrant.title && newGrant.url) {
-      onAddGrant({
-        ...newGrant,
-        id: Math.random().toString(36).substr(2, 9),
-      } as Grant);
+      if (editingId) {
+        onUpdateGrant({ ...newGrant, id: editingId } as Grant);
+        setEditingId(null);
+      } else {
+        onAddGrant({
+          ...newGrant,
+          id: Math.random().toString(36).substr(2, 9),
+        } as Grant);
+      }
       setIsAdding(false);
       setNewGrant({
         title: '',
@@ -954,13 +992,20 @@ const Directory = ({ grants, onAddGrant }: { grants: Grant[], onAddGrant: (grant
     }
   };
 
+  const handleEdit = (grant: Grant) => {
+    setNewGrant(grant);
+    setEditingId(grant.id);
+    setIsAdding(true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const externalResources = [
     { title: 'GrantFinder', url: 'https://grantfinder.co.uk/', desc: 'Advanced UK grant tracking tool.' },
     { title: 'Money.co.uk Guide', url: 'https://www.money.co.uk/business/guides/startup-and-small-business-grants', desc: 'Startup and small business grant guide.' }
   ];
 
   return (
-    <div className="max-w-7xl mx-auto p-6 md:p-10 space-y-12">
+    <div className="max-w-7xl mx-auto p-6 md:p-10 space-y-16">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 text-slate-900">
         <div className="space-y-2">
           <h2 className="text-4xl md:text-5xl font-black leading-none tracking-tight">Grant Directory</h2>
@@ -968,27 +1013,41 @@ const Directory = ({ grants, onAddGrant }: { grants: Grant[], onAddGrant: (grant
         </div>
         <Button 
           icon={Plus} 
-          onClick={() => setIsAdding(!isAdding)}
+          onClick={() => {
+            if (isAdding) {
+              setEditingId(null);
+              setNewGrant({ title: '', description: '', provider: '', category: 'Community', locationFocus: 'UK Wide', url: '', amount: '£0', deadline: 'Rolling', eligibility: [] });
+            }
+            setIsAdding(!isAdding);
+          }}
           variant={isAdding ? 'secondary' : 'primary'}
         >
           {isAdding ? 'Close Form' : 'Add New Grant'}
         </Button>
       </div>
 
-      {/* External Resources Bar */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {externalResources.map(res => (
-          <Card key={res.title} className="bg-slate-50 border-slate-200 flex items-center justify-between p-6">
-            <div className="space-y-1">
-              <p className="text-xs font-black text-teal-800 uppercase tracking-widest">Resource</p>
-              <h4 className="text-lg font-black text-slate-900">{res.title}</h4>
-              <p className="text-xs text-slate-500 font-medium">{res.desc}</p>
-            </div>
-            <a href={res.url} target="_blank" rel="noopener noreferrer" className="p-3 bg-white border-2 border-slate-100 rounded-xl hover:bg-teal-50 text-slate-400 hover:text-teal-700 transition-all">
-              <ExternalLink className="w-5 h-5" />
-            </a>
-          </Card>
-        ))}
+      {/* External Resources Bar - Dedicated Landing Hook */}
+      <div id="resources-section" className="space-y-8 pt-8 border-t border-slate-100">
+          <div className="flex items-center gap-3">
+             <div className="w-8 h-8 bg-teal-100 rounded-lg flex items-center justify-center">
+                <Globe className="w-4 h-4 text-teal-700" />
+             </div>
+             <h3 className="text-xl font-black text-slate-900 uppercase tracking-tighter">Verified Resources</h3>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {externalResources.map(res => (
+              <Card key={res.title} className="bg-white border-slate-200 flex items-center justify-between p-8 hover:border-teal-300 transition-all shadow-xl shadow-slate-200/20">
+                <div className="space-y-1">
+                  <p className="text-[10px] font-black text-teal-800 uppercase tracking-widest bg-teal-50 px-2 py-0.5 rounded w-fit mb-2">External Link</p>
+                  <h4 className="text-xl font-black text-slate-900">{res.title}</h4>
+                  <p className="text-sm text-slate-500 font-medium leading-relaxed">{res.desc}</p>
+                </div>
+                <a href={res.url} target="_blank" rel="noopener noreferrer" className="p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl hover:bg-teal-700 hover:text-white transition-all group">
+                  <ExternalLink className="w-6 h-6" />
+                </a>
+              </Card>
+            ))}
+          </div>
       </div>
 
       <AnimatePresence>
@@ -999,50 +1058,68 @@ const Directory = ({ grants, onAddGrant }: { grants: Grant[], onAddGrant: (grant
             exit={{ opacity: 0, height: 0 }}
             className="overflow-hidden"
           >
-            <Card className="bg-slate-50 border-2 border-teal-200 p-8 md:p-12">
-              <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <Input 
-                  label="Grant Title" 
-                  placeholder="e.g. Community Roots Fund" 
-                  value={newGrant.title}
-                  onChange={(e: any) => setNewGrant({...newGrant, title: e.target.value})}
-                  required
-                />
-                <Input 
-                  label="Provider / Funder" 
-                  placeholder="e.g. Local Authority" 
-                  value={newGrant.provider}
-                  onChange={(e: any) => setNewGrant({...newGrant, provider: e.target.value})}
-                />
-                <div className="md:col-span-2">
-                  <Input 
-                    label="One-liner Description" 
-                    placeholder="A brief summary of what the grant supports..." 
-                    value={newGrant.description}
-                    onChange={(e: any) => setNewGrant({...newGrant, description: e.target.value})}
-                  />
+            <Card className="bg-slate-950 text-white p-8 md:p-12 border-none shadow-2xl">
+              <div className="flex items-center gap-4 mb-10">
+                 <div className="w-10 h-10 bg-teal-500 rounded-xl flex items-center justify-center">
+                    {editingId ? <RefreshCw className="w-6 h-6 text-slate-950" /> : <Plus className="w-6 h-6 text-slate-950" />}
+                 </div>
+                 <h3 className="text-2xl font-black uppercase tracking-tighter">{editingId ? 'Update Existing Grant' : 'Add New Grant Opportunity'}</h3>
+              </div>
+              <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-8 text-slate-900">
+                <div className="space-y-6">
+                    <Input 
+                      label="Grant Title" 
+                      placeholder="e.g. Community Roots Fund" 
+                      value={newGrant.title}
+                      onChange={(e: any) => setNewGrant({...newGrant, title: e.target.value})}
+                      required
+                    />
+                    <Input 
+                      label="Provider / Funder" 
+                      placeholder="e.g. Local Authority" 
+                      value={newGrant.provider}
+                      onChange={(e: any) => setNewGrant({...newGrant, provider: e.target.value})}
+                    />
                 </div>
-                <Input 
-                  label="Website Link" 
-                  placeholder="e.g. https://gov.uk/grant" 
-                  value={newGrant.url}
-                  onChange={(e: any) => setNewGrant({...newGrant, url: e.target.value})}
-                  required
-                />
-                <Select 
-                  label="Category"
-                  options={categories.filter(c => c !== 'All').map(c => ({ label: c, value: c }))}
-                  value={newGrant.category}
-                  onChange={(e: any) => setNewGrant({...newGrant, category: e.target.value as any})}
-                />
+                <div className="space-y-6 text-slate-900">
+                    <Input 
+                      label="Website Link" 
+                      placeholder="e.g. https://gov.uk/grant" 
+                      value={newGrant.url}
+                      onChange={(e: any) => setNewGrant({...newGrant, url: e.target.value})}
+                      required
+                    />
+                    <Select 
+                      label="Category"
+                      options={categories.filter(c => c !== 'All').map(c => ({ label: c, value: c }))}
+                      value={newGrant.category}
+                      onChange={(e: any) => setNewGrant({...newGrant, category: e.target.value as any})}
+                    />
+                </div>
+                <div className="md:col-span-2">
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm font-bold text-slate-400 uppercase tracking-widest">Description</label>
+                    <textarea 
+                      rows={4}
+                      className="w-full bg-white border-2 border-slate-800 rounded-xl p-4 text-slate-900 outline-none focus:border-teal-500 transition-all font-medium"
+                      placeholder="Detailed overview of the grant purpose..."
+                      value={newGrant.description}
+                      onChange={(e) => setNewGrant({...newGrant, description: e.target.value})}
+                    />
+                  </div>
+                </div>
                 <Input 
                   label="Location Focus" 
                   placeholder="e.g. North West England" 
                   value={newGrant.locationFocus}
                   onChange={(e: any) => setNewGrant({...newGrant, locationFocus: e.target.value})}
                 />
-                <div className="md:col-span-2 flex justify-end">
-                  <Button type="submit" variant="primary" className="!px-12 !py-4 shadow-xl shadow-teal-900/10">Submit to Directory</Button>
+                <div className="flex items-center gap-4 text-slate-400 font-bold text-xs italic pt-8 md:pt-4">
+                   <Info className="w-4 h-4" /> User-added metadata is stored locally for the current session.
+                </div>
+                <div className="md:col-span-2 flex justify-end gap-4">
+                  <Button type="button" variant="secondary" onClick={() => { setIsAdding(false); setEditingId(null); }}>Cancel</Button>
+                  <Button type="submit" variant="primary" className="!px-12 !py-4">{editingId ? 'Update Listing' : 'Publish Listing'}</Button>
                 </div>
               </form>
             </Card>
@@ -1099,15 +1176,30 @@ const Directory = ({ grants, onAddGrant }: { grants: Grant[], onAddGrant: (grant
         <div className="lg:col-span-3">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {filteredGrants.map(grant => (
-              <Card key={grant.id} className="p-8 flex flex-col justify-between group hover:border-teal-700 border-2 transition-all">
+              <Card key={grant.id} className="p-8 flex flex-col justify-between group hover:border-teal-700 border-2 transition-all relative">
+                {(grant as any).isUserAdded && (
+                   <span className="absolute -top-3 left-6 px-3 py-1 bg-teal-900 text-white text-[8px] font-black uppercase tracking-widest rounded-full z-10">User Added</span>
+                )}
+                
                 <div className="space-y-6">
                   <div className="flex justify-between items-start">
                     <span className="px-3 py-1.5 rounded-lg bg-teal-50 text-teal-800 text-[10px] font-black uppercase tracking-widest border border-teal-100">
                       {grant.category}
                     </span>
-                    <a href={grant.url} target="_blank" rel="noopener noreferrer" className="p-2 bg-slate-50 hover:bg-teal-50 rounded-lg transition-colors text-slate-400 hover:text-teal-700">
-                      <ExternalLink className="w-5 h-5" />
-                    </a>
+                    <div className="flex items-center gap-2">
+                        <button 
+                           onClick={() => handleEdit(grant)}
+                           className="p-2 bg-slate-50 hover:bg-amber-50 rounded-lg transition-colors text-slate-400 hover:text-amber-600"
+                        >
+                           <RefreshCw className="w-4 h-4" />
+                        </button>
+                        <button 
+                           onClick={() => onDeleteGrant(grant.id)}
+                           className="p-2 bg-slate-50 hover:bg-rose-50 rounded-lg transition-colors text-slate-400 hover:text-rose-600"
+                        >
+                           <X className="w-4 h-4" />
+                        </button>
+                    </div>
                   </div>
                   <div className="space-y-3">
                     <h3 className="text-2xl font-black text-slate-950 group-hover:text-teal-700 transition-colors leading-tight">{grant.title}</h3>
@@ -1121,26 +1213,24 @@ const Directory = ({ grants, onAddGrant }: { grants: Grant[], onAddGrant: (grant
                     </div>
                   </div>
                 </div>
-                <Button 
-                   variant="secondary" 
-                   className="w-full mt-8 text-sm font-black uppercase tracking-widest shadow-sm"
-                   onClick={() => window.open(grant.url, '_blank')}
-                >
-                  Visit Official Site
-                </Button>
+                <div className="grid grid-cols-2 gap-4 mt-8">
+                   <Button 
+                      variant="secondary" 
+                      className="!text-[10px] !py-3 uppercase tracking-widest font-black"
+                      onClick={() => window.open(grant.url, '_blank')}
+                   >
+                     Visit Source
+                   </Button>
+                   <Button 
+                      variant="outline" 
+                      className="!text-[10px] !py-3 uppercase tracking-widest font-black"
+                      onClick={() => { /* Handled elsewhere */ }}
+                   >
+                     Shortlist
+                   </Button>
+                </div>
               </Card>
             ))}
-            {filteredGrants.length === 0 && (
-              <div className="col-span-full py-32 text-center space-y-6">
-                <div className="w-24 h-24 bg-slate-100 rounded-3xl flex items-center justify-center mx-auto opacity-50">
-                  <Info className="w-12 h-12 text-slate-400" />
-                </div>
-                <div className="space-y-2">
-                  <p className="text-2xl font-black text-slate-900">No results found</p>
-                  <p className="text-slate-500 font-medium">Try adjusting your filters or search keywords.</p>
-                </div>
-              </div>
-            )}
           </div>
         </div>
       </div>
@@ -1175,7 +1265,15 @@ export default function App() {
   };
 
   const handleAddGrant = (grant: Grant) => {
-    setAllGrants([grant, ...allGrants]);
+    setAllGrants([{ ...grant, isUserAdded: true }, ...allGrants]);
+  };
+
+  const handleDeleteGrant = (id: string) => {
+    setAllGrants(prev => prev.filter(g => g.id !== id));
+  };
+
+  const handleUpdateGrant = (updatedGrant: Grant) => {
+    setAllGrants(prev => prev.map(g => g.id === updatedGrant.id ? updatedGrant : g));
   };
 
   return (
@@ -1203,7 +1301,7 @@ export default function App() {
           <div className="hidden lg:flex items-center gap-8 text-xs font-bold uppercase tracking-widest text-slate-600">
             <button onClick={() => setView('landing')} className={`hover:text-teal-700 transition-colors uppercase ${view === 'landing' ? 'text-teal-700 pointer-events-none' : ''}`}>Dashboard</button>
             <button onClick={() => setView('directory')} className={`hover:text-teal-700 transition-colors uppercase ${view === 'directory' ? 'text-teal-700 pointer-events-none' : ''}`}>Grant Directory</button>
-            <a href="#" className="hover:text-teal-700 transition-colors uppercase">Resources</a>
+            <button onClick={() => { setView('directory'); setTimeout(() => document.getElementById('resources-section')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className="hover:text-teal-700 transition-colors uppercase">Resources</button>
             <div className="px-5 py-2 bg-slate-900 text-white rounded-full text-[10px] font-black border border-slate-800 uppercase tracking-tighter">
                {organisation ? organisation.name : 'UK THIRD SECTOR'}
             </div>
@@ -1247,7 +1345,12 @@ export default function App() {
 
           {view === 'directory' && (
             <motion.div key="directory" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-              <Directory grants={allGrants} onAddGrant={handleAddGrant} />
+              <Directory 
+                grants={allGrants} 
+                onAddGrant={handleAddGrant} 
+                onDeleteGrant={handleDeleteGrant}
+                onUpdateGrant={handleUpdateGrant}
+              />
             </motion.div>
           )}
         </AnimatePresence>
@@ -1276,9 +1379,8 @@ export default function App() {
                    <span>AI Drafting</span>
                    <span className="text-[9px] bg-slate-100 px-1.5 py-0.5 rounded uppercase">Soon</span>
                 </li>
-                <li className="flex items-center gap-2 opacity-50 cursor-not-allowed">
-                   <span>Expert Support</span>
-                   <span className="text-[9px] bg-slate-100 px-1.5 py-0.5 rounded uppercase">Soon</span>
+                <li className="flex items-center gap-2">
+                   <button onClick={() => { setView('directory'); setTimeout(() => document.getElementById('resources-section')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className="hover:text-teal-700 font-bold transition-colors">Resources</button>
                 </li>
               </ul>
             </div>
