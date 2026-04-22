@@ -456,22 +456,28 @@ const Results = ({
   }, [org, allGrants]);
 
   const nextCard = (isMatch: boolean) => {
-    if (isMatch && !shortlist.find(s => s.id === matches[currentIndex].id)) {
-      setShortlist(prev => [...prev, matches[currentIndex]]);
+    if (currentIndex >= matches.length || direction !== 0) return;
+    
+    const currentGrant = matches[currentIndex];
+    if (isMatch && !shortlist.find(s => s.id === currentGrant.id)) {
+      setShortlist(prev => [...prev, currentGrant]);
     }
+    
     setDirection(isMatch ? 1 : -1);
     
     setTimeout(() => {
       setCurrentIndex(prev => prev + 1);
       setDirection(0);
-    }, 200);
+    }, 400);
   };
 
   const handleDragEnd = (_: any, info: any) => {
     const threshold = 100;
-    if (info.offset.x > threshold) {
+    const velocityThreshold = 500;
+    
+    if (info.offset.x > threshold || info.velocity.x > velocityThreshold) {
       nextCard(true);
-    } else if (info.offset.x < -threshold) {
+    } else if (info.offset.x < -threshold || info.velocity.x < -velocityThreshold) {
       nextCard(false);
     }
   };
@@ -532,23 +538,29 @@ const Results = ({
               <div className="w-full max-w-lg relative h-[550px]">
                 <AnimatePresence mode="popLayout">
                   {!isEnd ? (
-                    <motion.div
-                      key={matches[currentIndex].id}
-                      drag="x"
-                      dragConstraints={{ left: 0, right: 0 }}
-                      onDragEnd={handleDragEnd}
-                      initial={{ opacity: 0, scale: 0.9, x: 0 }}
-                      animate={{ opacity: 1, scale: 1, x: 0, rotate: 0 }}
-                      exit={{ 
-                        opacity: 0, 
-                        x: direction * 500 || (direction === 0 ? 0 : direction * 500), 
-                        rotate: direction * 45,
-                        scale: 0.5 
-                      }}
-                      whileDrag={{ scale: 1.05, cursor: "grabbing" }}
-                      transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                      className="absolute inset-0 z-10 touch-none"
-                    >
+                      <motion.div
+                        key={matches[currentIndex].id}
+                        drag="x"
+                        dragConstraints={{ left: -500, right: 500 }}
+                        dragElastic={0.5}
+                        onDragEnd={handleDragEnd}
+                        initial={{ opacity: 0, scale: 0.9, x: 0 }}
+                        animate={{ opacity: 1, scale: 1, x: 0, rotate: 0 }}
+                        exit={{ 
+                          opacity: 0, 
+                          x: direction * 500 || (direction === 0 ? 0 : direction * 500), 
+                          rotate: direction * 35,
+                          scale: 0.8
+                        }}
+                        whileDrag={{ scale: 1.02, cursor: "grabbing" }}
+                        transition={{ 
+                          type: "spring", 
+                          stiffness: 300, 
+                          damping: 25,
+                          opacity: { duration: 0.2 }
+                        }}
+                        className="absolute inset-0 z-10 touch-none flex items-center justify-center p-4"
+                      >
                       <Card className="h-full flex flex-col p-10 border-4 border-slate-100 shadow-2xl relative overflow-hidden group select-none">
                         <div className="absolute top-0 left-0 w-full h-2 bg-linear-to-r from-teal-500 via-emerald-500 to-teal-500" />
                         
@@ -1167,7 +1179,17 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen text-slate-900 selection:bg-teal-100">
+    <div className="min-h-screen text-slate-900 selection:bg-teal-100 relative">
+      {/* Prototype Banner */}
+      <div className="bg-slate-950 text-white py-2 px-4 text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-center border-b border-white/10 z-[60] sticky top-0 flex items-center justify-center gap-4">
+        <span className="flex items-center gap-2">
+          <Info className="w-3 h-3 text-teal-400" />
+          Prototype Environment
+        </span>
+        <span className="w-1 h-1 rounded-full bg-slate-700 hidden sm:block" />
+        <span className="text-slate-400 hidden sm:block font-bold">AI generation is simulated for demonstration</span>
+      </div>
+
       {/* Navigation */}
       <nav className="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
@@ -1250,16 +1272,24 @@ export default function App() {
               <h5 className="font-black text-xs uppercase tracking-widest text-slate-500">Toolkit</h5>
               <ul className="space-y-3 text-sm font-bold text-slate-700">
                 <li><button onClick={() => setView('directory')} className="hover:text-teal-700 font-bold transition-colors">Grant Directory</button></li>
-                <li><a href="#" className="hover:text-teal-700 font-bold transition-colors">AI Drafting</a></li>
-                <li><a href="#" className="hover:text-teal-700 font-bold transition-colors">Expert Support</a></li>
+                <li className="flex items-center gap-2 opacity-50 cursor-not-allowed">
+                   <span>AI Drafting</span>
+                   <span className="text-[9px] bg-slate-100 px-1.5 py-0.5 rounded uppercase">Soon</span>
+                </li>
+                <li className="flex items-center gap-2 opacity-50 cursor-not-allowed">
+                   <span>Expert Support</span>
+                   <span className="text-[9px] bg-slate-100 px-1.5 py-0.5 rounded uppercase">Soon</span>
+                </li>
               </ul>
             </div>
             <div className="space-y-6">
               <h5 className="font-black text-xs uppercase tracking-widest text-slate-500">Transparency</h5>
               <ul className="space-y-3 text-sm font-bold text-slate-700">
-                <li><a href="#" className="hover:text-teal-700 transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-teal-700 transition-colors">Data Usage</a></li>
-                <li><a href="#" className="hover:text-teal-700 transition-colors">Status</a></li>
+                <li className="opacity-50 cursor-not-allowed font-bold">Privacy Policy</li>
+                <li className="opacity-50 cursor-not-allowed font-bold">Data Usage</li>
+                <li><button onClick={() => window.location.reload()} className="hover:text-teal-700 transition-colors flex items-center gap-2">
+                   Status <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                </button></li>
               </ul>
             </div>
           </div>
